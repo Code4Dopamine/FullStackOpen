@@ -1,0 +1,26 @@
+title FullStackOpen - Part0b Exercise 0.4
+
+note over browser:
+User types text into "textbox" and press "Save" button
+end note
+browser-->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+server-->browser: HTTP Status Code 302 (URL redirect) 
+note over browser:
+Form Data: note:"Test+Submit"
+is sent to Server
+end note
+
+browser-->server:GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser:HTML-code
+browser-->server:GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser:main.css
+browser-->server:GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser:main.js
+note over browser:
+Calls for "/exampleapp/data.json" 
+via XMLHttpRequest()
+end note
+browser-->server:GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser:data.json (returns to browser full list of notes in json format)
+browser-->server:GET https://studies.cs.helsinki.fi/favicon.ico
+server-->browser:HTML-code (Course stats Link)

@@ -1,0 +1,16 @@
+title FullStackOpen - Part0b Exercise 0.6
+
+note over browser:
+User types "Sumit 0.6" into textbox field and press "Save" button
+end note
+
+note over browser:
+Browser does the following:
+1. Prevents default (GET request)
+2. Creates a "new_note" and appends it to the page (via notes.push(note))
+3. Re-renders the page
+4. Sends new note to server
+end note
+
+browser-->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP Status Code 201 (JSON: message "note created" )
