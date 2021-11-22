@@ -25,4 +25,6 @@ Text code [here](0.5\0.5-WebSequenceDiagram.txt)
 <details>
     <summary> File Submission: Sequence Diagram for Excersice 0.6 </summary>
 <img src="0.6\Exercise_0.6-New_note.jpg">
+
+Text code [here](0.6\0.6-WebSequenceDiagram.txt)
 </details>
