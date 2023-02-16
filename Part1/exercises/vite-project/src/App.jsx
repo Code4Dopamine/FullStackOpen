@@ -4,21 +4,23 @@ import './App.css'
 
 const App = () => {
   //Exercise 1.3
-  const course = 'Half Stack application development'
-  const parts = [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
 
   /*
   Header takes care of rendering the name of the course, 
@@ -28,15 +30,14 @@ const App = () => {
 
   //Header
   const Header = (props) => {
-    console.log(props)
+    console.log("Header: " + props)
     return (
-      <h1>{props.course}</h1>
+      <h1>{props.course.name}</h1>
     )
   }
   //Content
   const Content = (props) => {
     console.log("Content"+props)
-    console.log(parts)
     return (
       // <p>{props.name} {props.exercise}</p>
       // <div>
@@ -46,7 +47,7 @@ const App = () => {
       // </div>
       <div>
         {
-          props.parts.map(e => {
+          props.course.parts.map(e => {
             return <p>{e.name} {e.exercises}</p>
           })
         }
@@ -57,7 +58,7 @@ const App = () => {
   const Total = (props) => {
     console.log(props)
     let sum = 0;
-    parts.forEach(e => sum+=e.exercises)
+    props.course.parts.forEach(e => sum+=e.exercises)
     return (
       <p>Number of exercises {sum}</p>
     )
@@ -74,8 +75,8 @@ const App = () => {
   return (
     <div>
       <Header course={course} />
-      <Content parts={parts}/>
-      <Total parts={parts} />
+      <Content course={course}/>
+      <Total course={course} />
     </div>
   )
 }
