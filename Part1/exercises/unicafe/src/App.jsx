@@ -7,6 +7,8 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+
+  // const [all,average,positive] = 0
   
   // let setBad = () => {setBad+=1}
 
@@ -24,6 +26,14 @@ const App = () => {
         <p>good: {good}</p>
         <p>neutral: {neutral}</p>
         <p>bad: {bad}</p>
+
+        <div className="divider"></div> 
+
+        <p>all: {good+neutral+bad}</p>
+        <p>average: {parseFloat((good-bad)/(good+neutral+bad)*100).toFixed(2)} %</p>
+        <p>positive: {parseFloat(good/(good+neutral+bad)*100).toFixed(2)} %</p>
+
+
       </div>
 
     </div>
