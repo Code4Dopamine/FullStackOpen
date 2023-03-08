@@ -2,6 +2,22 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
+const MostVotes = (props) => {
+  if (props.mostVotedAnectode === "") {
+    return (
+      <p>No votes has been made on any anecdotes</p>
+    )
+  } else {
+    return (
+      <>
+        <p>{props.mostVotedAnectode}</p>
+        <div className="divider"></div>
+        <p>has {props.votes[props.mostVotedAnectode]} votes</p>
+      </>
+    )
+  }
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -14,47 +30,57 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  // const items = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState({}); //Stores Objects of this format {'<anecdotes>': '<#ofVotes>'}
+  
+  const [maxVoteAnecdote, setMaxVoteAnecdote] = useState("")
+  let maxVoteCount = 0;
 
-  const [votes, setVotes] = useState({});
 
-  const handleVote = (item) => {
+  const handleVote = (anecdote,highestVote) => {
+
     setVotes((prevVotes) => {
       const updatedVotes = { ...prevVotes };
-      updatedVotes[item] = (prevVotes[item] || 0) + 1;
+      updatedVotes[anecdote] = (prevVotes[anecdote] || 0) + 1;
+
+      // Initial Max Vote setup
+      if(highestVote === ""){
+        setMaxVoteAnecdote(anecdote)
+      }
+      // Update "Anecdote with most votes"
+      if(updatedVotes[anecdote] > updatedVotes[highestVote]){
+        setMaxVoteAnecdote(anecdote)
+        console.log("NewMax:",updatedVotes[anecdote])
+      }
+
       return updatedVotes;
     });
   };
 
-
-
-  const [selected, setSelected] = useState(0)
-  const [maxVoteAnecdote, setMaxVoteAnecdote] = useState("")
   // console.log(votes)
   // console.log(votes[selected])
+  // console.log("maxVoteAnecdote:")
+  // console.log(maxVoteAnecdote)
+
 
   return (
     <div className=''>
       <div>
+        <h1 className='py-5'>Anecdote of the day</h1>
         <p>{anecdotes[selected]}</p>
         <div className="divider"></div>
         <p>has {votes[anecdotes[selected]] || 0} votes</p>
       </div>
       <div className='py-5'>
-        <button className='btn btn-outline' onClick={() => handleVote(anecdotes[selected])}>vote</button>
+        <button className='btn btn-outline' onClick={() => handleVote(anecdotes[selected],maxVoteAnecdote)}>vote</button>
         <button className='btn btn-ghost btn-active' onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>next anecdote</button>
 
       </div>
 
-      {/* Testing Code */}
-      {/* <ul>
-        {anecdotes.map((item) => (
-          <li key={item}>
-            {anecdotes.indexOf(item)}: {votes[item] || 0}
-            <button onClick={() => handleVote(item)}>Vote</button>
-          </li>
-        ))}
-      </ul> */}
+      <div>
+        <h1 className='py-5'>Anecdote with most votes</h1>
+        <MostVotes mostVotedAnectode={maxVoteAnecdote} votes={votes}/>
+      </div>      
 
     </div>
   )
