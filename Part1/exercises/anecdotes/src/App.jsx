@@ -14,17 +14,48 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
+  // const items = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+  const [votes, setVotes] = useState({});
+
+  const handleVote = (item) => {
+    setVotes((prevVotes) => {
+      const updatedVotes = { ...prevVotes };
+      updatedVotes[item] = (prevVotes[item] || 0) + 1;
+      return updatedVotes;
+    });
+  };
+
+
+
   const [selected, setSelected] = useState(0)
-  // console.log("Length:" + anecdotes.length)
-  // console.log(selected)
+  const [maxVoteAnecdote, setMaxVoteAnecdote] = useState("")
+  // console.log(votes)
+  // console.log(votes[selected])
 
   return (
-    <div>
-      {anecdotes[selected]}
+    <div className=''>
       <div>
-
-        <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>Hello</button>
+        <p>{anecdotes[selected]}</p>
+        <div className="divider"></div>
+        <p>has {votes[anecdotes[selected]] || 0} votes</p>
       </div>
+      <div className='py-5'>
+        <button className='btn btn-outline' onClick={() => handleVote(anecdotes[selected])}>vote</button>
+        <button className='btn btn-ghost btn-active' onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>next anecdote</button>
+
+      </div>
+
+      {/* Testing Code */}
+      {/* <ul>
+        {anecdotes.map((item) => (
+          <li key={item}>
+            {anecdotes.indexOf(item)}: {votes[item] || 0}
+            <button onClick={() => handleVote(item)}>Vote</button>
+          </li>
+        ))}
+      </ul> */}
+
     </div>
   )
 }
