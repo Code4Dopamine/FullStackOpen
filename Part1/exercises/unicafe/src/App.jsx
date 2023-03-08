@@ -11,23 +11,32 @@ const Statistics = (props) => {
   // console.log("average:",average)
   // console.log("positive:",positive)
 
+  if (all === 0) {
     return (
       <>
         <h1 className='py-5'>Statistics</h1>
-        <div>
-          <p>good: {props.good}</p>
-          <p>neutral: {props.neutral}</p>
-          <p>bad: {props.bad}</p>
-
-          <div className="divider"></div>
-
-          <p>all: {all}</p>
-          <p>average: {isNaN(average) ? 0 : average}</p>
-          <p>positive: {isNaN(positive) ? 0 : positive}</p>
-
-        </div>
+        <p>No feedback given</p>
       </>
     )
+  }
+
+  return (
+    <>
+      <h1 className='py-5'>Statistics</h1>
+      <div>
+        <p>good: {props.good}</p>
+        <p>neutral: {props.neutral}</p>
+        <p>bad: {props.bad}</p>
+
+        <div className="divider"></div>
+
+        <p>all: {all}</p>
+        <p>average: {isNaN(average) ? 0 : average}</p>
+        <p>positive: {isNaN(positive) ? 0 : positive}</p>
+
+      </div>
+    </>
+  )
 
 }
 
@@ -38,7 +47,7 @@ const App = () => {
   const [bad, setBad] = useState(0)
   // const [average, setAverage] = useState(0)
   // const all = 
-  
+
 
   return (
     <div>
