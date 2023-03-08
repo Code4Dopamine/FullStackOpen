@@ -10,13 +10,17 @@ const Button = ({ text, handleClick, className }) => {
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <p>{text}: {value}</p>
+    // <p>{text}: {value}</p> //Paragraph Styling
+    <tr>
+      <td>{text}:</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
 const Statistics = (props) => {
   let all = props.good + props.neutral + props.bad
-  let average = parseFloat((props.good - props.bad) / (props.good + props.neutral + props.bad)).toFixed(4)
+  let average = parseFloat((props.good - props.bad) / (props.good + props.neutral + props.bad)).toFixed(2)
   let positive = parseFloat(props.good / (props.good + props.neutral + props.bad) * 100).toFixed(2)
 
   // console.log("all:",all)
@@ -35,7 +39,7 @@ const Statistics = (props) => {
   return (
     <>
       <h1 className='py-5'>Statistics</h1>
-      <div>
+      {/* <div> // Paragraph Styling
         <StatisticLine text={"good"} value={props.good} />
         <StatisticLine text={"neutral"} value={props.neutral} />
         <StatisticLine text={"bad"} value={props.bad} />
@@ -46,7 +50,18 @@ const Statistics = (props) => {
         <p>average: {isNaN(average) ? 0 : average}</p>
         <p>positive: {isNaN(positive) ? 0 : positive}</p>
 
-      </div>
+      </div> */}
+
+      <table className='mx-auto'>
+        <tbody>
+          <StatisticLine text={"good"} value={props.good} />
+          <StatisticLine text={"neutral"} value={props.neutral} />
+          <StatisticLine text={"bad"} value={props.bad} />
+          <StatisticLine text={"all"} value={all} />
+          <StatisticLine text={"average"} value={isNaN(average) ? 0 : average} />
+          <StatisticLine text={"positive"} value={isNaN(positive) ? 0 : positive + " %"} />
+        </tbody>
+      </table>
     </>
   )
 

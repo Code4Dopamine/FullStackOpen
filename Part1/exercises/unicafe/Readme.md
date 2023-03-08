@@ -1,3 +1,13 @@
-To run file:
-1. (One-time) `cd` to `unicafe` folder and run `npm install`
-2. Run `npm run dev`
+# Unicafe
+
+### To run file:
+
+1. Install Node.js (npm) locally
+2. (One-time) In terminal, `cd` to `unicafe` folder, then  run `npm install`
+3. Run `npm run dev`
+
+
+### Website Overview:  
+<img src="./src/assets/Screenshot-Unicafe.jpg" width="600">
+
+
