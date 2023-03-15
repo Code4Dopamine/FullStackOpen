@@ -10,6 +10,7 @@ const App = () => {
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [nameFilter, setNameFilter] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -18,12 +19,12 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length+1
+      id: persons.length + 1
     }
 
     if (persons.find(e => e.name === newName) !== undefined) {
       window.alert(`"${newName}" is already added to phonebook`)
-      
+
     } else if (newName.length > 0) {
       setPersons(persons.concat(personObject))
       setNewName('')
@@ -34,30 +35,46 @@ const App = () => {
 
   const handleNewName = (event) => {
     // console.log(event.target.value)
-    setNewName(event.target.value);
+    setNewName(event.target.value)
   }
   const handleNewNumber = (event) => {
     // console.log(event.target.value)
-    setNewNumber(event.target.value);
+    setNewNumber(event.target.value)
+  }
+  const handleNameFilter = (event) => {
+    setNameFilter(event.target.value)
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          <div>debug: {newName},{newNumber}</div>
-          <div>name: <input type="text" pattern="[a-zA-z ]+"value={newName} onChange={handleNewName} /></div>
-          <div>number: <input type="tel" pattern="^[0-9]+(-[0-9]+)*$" value={newNumber} onChange={handleNewNumber} /> </div>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <p>filter shown with <input onChange={handleNameFilter} /></p>
+      <h2>Add a new</h2>
+      <div>
+        <form onSubmit={addPerson}>
+          <div>
+            <div>debug: {newName},{newNumber}</div>
+            <div>name: <input type="text" pattern="[a-zA-z ]+" value={newName} onChange={handleNewName} /></div>
+            <div>number: <input type="tel" pattern="^[0-9]+(-[0-9]+)*$" value={newNumber} onChange={handleNewNumber} /> </div>
+          </div>
+          <div>
+            <button type="submit">add</button>
+          </div>
+        </form>
+      </div>
+
+
       <h2>Numbers</h2>
-      {persons.map(e => {
+      {/* <p>Filter</p> */}
+      {persons.filter(e => e.name.toLowerCase().includes(nameFilter))
+      .map(e => {
         return <p key={e.name}>{e.name}: {e.number}</p>
       })}
+
+      {/* <p>Old</p>
+      {persons.map(e => {
+        return <p key={e.name}>{e.name}: {e.number}</p>
+      })} */}
     </div>
   )
 }
