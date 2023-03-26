@@ -43,17 +43,18 @@ const App = () => {
       window.alert(`"${newName}" is already added to phonebook`)
 
     } else if (newName.length > 0) {
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
-    }
-    personService
+      // setPersons(persons.concat(personObject))
+      // setNewName('')
+      // setNewNumber('')
+      personService
       .create(personObject)
       .then(returnPerson => {
         setPersons(persons.concat(returnPerson))
         setNewName('')
         setNewNumber('')
       })
+    }
+
 
   }
 
@@ -68,6 +69,15 @@ const App = () => {
   }
   const handleNameFilter = (event) => {
     setNameFilter(event.target.value)
+  }
+  const handleDelete = (id,name) => {
+    if (window.confirm(`Delete "${name}"?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
   }
 
   return (
@@ -85,7 +95,12 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons filter={nameFilter} personList={persons} />
+      <Persons filter={nameFilter} personList={persons} handleDelete={handleDelete} />
+
+      <h3>Delete</h3>
+      <div>
+        <p>Test <button>delete</button></p>
+      </div>
 
     </div>
   )
