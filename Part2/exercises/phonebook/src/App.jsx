@@ -35,11 +35,13 @@ const App = () => {
 
     const personObject = {
       name: newName,
-      number: newNumber,
-      id: persons.length + 1
+      number: newNumber
+      // id: persons.length + 1
     }
 
     if (persons.find(e => e.name === newName) !== undefined) {
+      // Check Name -> Exists => Check Number -> Exist ? Alert : Change Number
+      // if()
       window.alert(`"${newName}" is already added to phonebook`)
 
     } else if (newName.length > 0) {
@@ -47,12 +49,12 @@ const App = () => {
       // setNewName('')
       // setNewNumber('')
       personService
-      .create(personObject)
-      .then(returnPerson => {
-        setPersons(persons.concat(returnPerson))
-        setNewName('')
-        setNewNumber('')
-      })
+        .create(personObject)
+        .then(returnPerson => {
+          setPersons(persons.concat(returnPerson))
+          setNewName('')
+          setNewNumber('')
+        })
     }
 
 
@@ -60,17 +62,18 @@ const App = () => {
 
   // OnChange Handler
   const handleNewName = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewName(event.target.value)
   }
   const handleNewNumber = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewNumber(event.target.value)
   }
   const handleNameFilter = (event) => {
+    // console.log(event.target.value)
     setNameFilter(event.target.value)
   }
-  const handleDelete = (id,name) => {
+  const handleDelete = (id, name) => {
     if (window.confirm(`Delete "${name}"?`)) {
       personService
         .remove(id)
@@ -95,7 +98,11 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons filter={nameFilter} personList={persons} handleDelete={handleDelete} />
+      <Persons
+        filter={nameFilter}
+        personList={persons}
+        handleDelete={handleDelete}
+      />
 
       <h3>Delete</h3>
       <div>
