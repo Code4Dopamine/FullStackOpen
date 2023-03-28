@@ -27,7 +27,7 @@ const App = () => {
     //     setPersons(res.data)
     //   })
     personService.getAll().then(initialPersons => {
-      console.log("initPerson:",initialPersons)
+      console.log("initPerson:", initialPersons)
       setPersons(initialPersons)
     })
   }, [])
@@ -53,16 +53,18 @@ const App = () => {
         window.alert(`"${newName}" is already added to phonebook`)
       } else {
         // console.log("running else")
-        window.alert(`"${newName}" is already added to phonebook, replace the old number with a new one?`)
-        personService
-          .update(searchPerson.id, personObject)
-          .then(response => {
-            // console.log("response:",response)
-            setPersons(persons.map(e => e.id !== searchPerson.id ? e : response))
-          })
-          // .then()
+        if (window.confirm(`"${newName}" is already added to phonebook, replace the old number with a new one?`)){
+          personService
+            .update(searchPerson.id, personObject)
+            .then(response => {
+              // console.log("response:",response)
+              setPersons(persons.map(e => e.id !== searchPerson.id ? e : response))
+            })
+        }
       }
-    } else if (newName.length > 0) {
+    }
+
+    if (newName.length > 0 && searchPerson === undefined) {
       // setPersons(persons.concat(personObject))
       // setNewName('')
       // setNewNumber('')
