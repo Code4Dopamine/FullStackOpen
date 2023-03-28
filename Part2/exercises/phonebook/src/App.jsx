@@ -39,6 +39,9 @@ const App = () => {
       // id: persons.length + 1
     }
 
+    const searchPerson = persons.find(e => e.name === newName)
+    console.log("searchPerson:",searchPerson)
+
     if (persons.find(e => e.name === newName) !== undefined) {
       // Check Name -> Exists => Check Number -> Exist ? Alert : Change Number
       // if()
@@ -103,11 +106,6 @@ const App = () => {
         personList={persons}
         handleDelete={handleDelete}
       />
-
-      <h3>Delete</h3>
-      <div>
-        <p>Test <button>delete</button></p>
-      </div>
 
     </div>
   )
