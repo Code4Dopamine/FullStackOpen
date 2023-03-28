@@ -20,12 +20,16 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(res => {
-        console.log('fetched data complete')
-        setPersons(res.data)
-      })
+    // axios
+    //   .get('http://localhost:3001/persons')
+    //   .then(res => {
+    //     console.log('fetched data complete')
+    //     setPersons(res.data)
+    //   })
+    personService.getAll().then(initialPersons => {
+      console.log("initPerson:",initialPersons)
+      setPersons(initialPersons)
+    })
   }, [])
 
 
@@ -40,13 +44,24 @@ const App = () => {
     }
 
     const searchPerson = persons.find(e => e.name === newName)
-    console.log("searchPerson:",searchPerson)
+    // console.log("personServiceLog:",personService.getAll())
+    // const searchPerson = personService.getAll().find(e => e.name === newName)
+    console.log("searchPerson:", searchPerson)
 
-    if (persons.find(e => e.name === newName) !== undefined) {
-      // Check Name -> Exists => Check Number -> Exist ? Alert : Change Number
-      // if()
-      window.alert(`"${newName}" is already added to phonebook`)
-
+    if (searchPerson !== undefined) {
+      if (searchPerson.number === newNumber) {
+        window.alert(`"${newName}" is already added to phonebook`)
+      } else {
+        // console.log("running else")
+        window.alert(`"${newName}" is already added to phonebook, replace the old number with a new one?`)
+        personService
+          .update(searchPerson.id, personObject)
+          .then(response => {
+            console.log("response:",response)
+            setPersons(persons.map(e => e.id !== searchPerson.id ? e : response))
+          })
+          // .then()
+      }
     } else if (newName.length > 0) {
       // setPersons(persons.concat(personObject))
       // setNewName('')
@@ -59,6 +74,24 @@ const App = () => {
           setNewNumber('')
         })
     }
+
+    // if (persons.find(e => e.name === newName) !== undefined) {
+    //   // Check Name -> Exists => Check Number -> Exist ? Alert : Change Number
+    //   // if()
+    //   window.alert(`"${newName}" is already added to phonebook`)
+
+    // } else if (newName.length > 0) {
+    //   // setPersons(persons.concat(personObject))
+    //   // setNewName('')
+    //   // setNewNumber('')
+    //   personService
+    //     .create(personObject)
+    //     .then(returnPerson => {
+    //       setPersons(persons.concat(returnPerson))
+    //       setNewName('')
+    //       setNewNumber('')
+    //     })
+    // }
 
 
   }
