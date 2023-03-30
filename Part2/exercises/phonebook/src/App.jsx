@@ -6,6 +6,7 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -17,6 +18,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [nameFilter, setNameFilter] = useState('')
+  const [notification, setNotification] = useState({ type: 'msg', message: '' })
+
 
   useEffect(() => {
     console.log('effect')
@@ -30,6 +33,7 @@ const App = () => {
       console.log("initPerson:", initialPersons)
       setPersons(initialPersons)
     })
+    // const timer = setTimeout(() =>)
   }, [])
 
 
@@ -50,15 +54,17 @@ const App = () => {
 
     if (searchPerson !== undefined) {
       if (searchPerson.number === newNumber) {
-        window.alert(`"${newName}" is already added to phonebook`)
+        // window.alert(`"${newName}" is already added to phonebook`)
+        handleNotification('error', `"${newName}" is already added to phonebook`)
       } else {
         // console.log("running else")
-        if (window.confirm(`"${newName}" is already added to phonebook, replace the old number with a new one?`)){
+        if (window.confirm(`"${newName}" is already added to phonebook, replace the old number with a new one?`)) {
           personService
             .update(searchPerson.id, personObject)
             .then(response => {
               // console.log("response:",response)
               setPersons(persons.map(e => e.id !== searchPerson.id ? e : response))
+              handleNotification('msg', `Updated ${personObject.name}'s phone number`)
             })
         }
       }
@@ -74,6 +80,7 @@ const App = () => {
           setPersons(persons.concat(returnPerson))
           setNewName('')
           setNewNumber('')
+          handleNotification('msg', `Added ${personObject.name}`)
         })
     }
 
@@ -94,8 +101,6 @@ const App = () => {
     //       setNewNumber('')
     //     })
     // }
-
-
   }
 
   // OnChange Handler
@@ -121,9 +126,15 @@ const App = () => {
     }
   }
 
+  const handleNotification = (t, msg) => {
+    setNotification({ type: t, message: msg })
+    setTimeout(() => { setNotification({ ...notification, msg: '' }) }, 3000)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification type={notification.type} message={notification.message} />
       <Filter handleFilter={handleNameFilter} />
 
       <h2>Add a new</h2>
