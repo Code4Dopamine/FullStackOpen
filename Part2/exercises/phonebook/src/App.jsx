@@ -122,6 +122,13 @@ const App = () => {
         .remove(id)
         .then(() => {
           setPersons(persons.filter(person => person.id !== id))
+          handleNotification('msg', `Information of "${name}" removed successfully`)
+        })
+        .catch(err => {
+          console.error(err)
+          handleNotification('error',`Information of "${name}" has already been removed from server`)
+          //Reload page to get updated info from server
+          // setTimeout(() => window.location.reload(), 3000)
         })
     }
   }
