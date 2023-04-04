@@ -4,6 +4,8 @@ import axios from 'axios'
 
 const CountriesInfo = ({searchInput}) => {
     const [countries, setCountries] = useState([])
+    const [show, toggleShow] = useState(false)
+
 
     useEffect(() => {
         console.log('CountriesInfo Run')
